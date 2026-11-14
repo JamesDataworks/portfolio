@@ -320,6 +320,6 @@ export const certifications = [
     code: 'DP-600',
     issuer: 'Microsoft',
     issued: 'Mar 2026',
-    url: 'https://learn.microsoft.com/en-us/users/your-profile/credentials/your-credential-id',
+    url: 'https://learn.microsoft.com/en-us/users/jamespj-3461/credentials/a095a9b6ca05551f?ref=https%3A%2F%2Fwww.linkedin.com%2F',
   }
 ]
