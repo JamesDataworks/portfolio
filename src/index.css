@@ -1,0 +1,78 @@
+@import 'tailwindcss';
+
+/* ═══════════════════════════════════════════════════════════════
+   DESIGN TOKENS
+   Change a value here and it updates everywhere on the site.
+
+   Note: the four discipline accent colours (Power BI amber,
+   Fabric teal, Python blue, Full Stack violet) are NOT here —
+   they live next to each section in src/data/portfolio.js so
+   that one file stays the single place you edit.
+   ═══════════════════════════════════════════════════════════════ */
+@theme {
+  --color-canvas: #eef1f4; /* page background        */
+  --color-surface: #ffffff; /* tiles, tables          */
+  --color-ink: #1a2027; /* headings, primary text */
+  --color-muted: #66727f; /* secondary text         */
+  --color-rule: #d2d9e0; /* hairlines, borders     */
+
+  --font-display: 'Archivo', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Public Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* stops sticky tab strip from covering section headings */
+    scroll-padding-top: 5.5rem;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    font-variant-numeric: tabular-nums;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.021em;
+  }
+
+  /* Keyboard focus stays clearly visible everywhere */
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* The one piece of motion on the page: the hero chart bars
+   draw themselves once, on load. Nothing else animates. */
+@keyframes grow-bar {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+.bar-grow {
+  transform-origin: bottom;
+  animation: grow-bar 900ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
