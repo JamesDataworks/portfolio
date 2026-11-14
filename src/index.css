@@ -4,31 +4,36 @@
    DESIGN TOKENS
    Change a value here and it updates everywhere on the site.
 
-   Note: the four discipline accent colours (Power BI amber,
-   Fabric teal, Python blue, Full Stack violet) are NOT here —
-   they live next to each section in src/data/portfolio.js so
-   that one file stays the single place you edit.
+   The four discipline accent colours (Power BI amber, Fabric teal,
+   Python blue, Full Stack violet) live next to each section in
+   src/data/portfolio.js so that one file stays the single place
+   you edit.
    ═══════════════════════════════════════════════════════════════ */
 @theme {
-  --color-canvas: #eef1f4; /* page background        */
-  --color-surface: #ffffff; /* tiles, tables          */
-  --color-ink: #1a2027; /* headings, primary text */
-  --color-muted: #66727f; /* secondary text         */
-  --color-rule: #d2d9e0; /* hairlines, borders     */
+  --color-canvas: #0a0e17; /* page background        */
+  --color-surface: #111827; /* cards                  */
+  --color-ink: #eef2f8; /* headings, primary text */
+  --color-muted: #96a2b6; /* secondary text         */
+  --color-rule: #222b3c; /* hairlines, borders     */
 
-  --font-display: 'Archivo', ui-sans-serif, system-ui, sans-serif;
-  --font-body: 'Public Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    /* stops sticky tab strip from covering section headings */
-    scroll-padding-top: 5.5rem;
+    /* stops the sticky nav from covering section headings */
+    scroll-padding-top: 5rem;
+    color-scheme: dark;
   }
 
   body {
     background-color: var(--color-canvas);
+    background-image:
+      radial-gradient(900px 520px at 8% -8%, rgb(91 140 255 / 0.16), transparent 65%),
+      radial-gradient(800px 480px at 95% 2%, rgb(167 123 255 / 0.14), transparent 65%);
+    background-repeat: no-repeat;
     color: var(--color-ink);
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
@@ -39,30 +44,52 @@
   h2,
   h3 {
     font-family: var(--font-display);
-    letter-spacing: -0.021em;
+    letter-spacing: -0.025em;
   }
 
-  /* Keyboard focus stays clearly visible everywhere */
+  ::selection {
+    background: rgb(91 140 255 / 0.35);
+  }
+
   :focus-visible {
-    outline: 2px solid var(--color-ink);
+    outline: 2px solid #8fb0ff;
     outline-offset: 3px;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      transition-duration: 0.01ms !important;
-    }
+    border-radius: 6px;
   }
 }
 
-/* The one piece of motion on the page: the hero chart bars
-   draw themselves once, on load. Nothing else animates. */
+/* ── Decorative helpers ─────────────────────────────────────── */
+
+.text-gradient {
+  background: linear-gradient(95deg, #f2b134 0%, #2ec4b6 38%, #5b8cff 68%, #a77bff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 30%, transparent 80%);
+}
+
+/* Project tiles glow in their section's accent on hover */
+.tile {
+  transition:
+    transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 300ms,
+    box-shadow 300ms;
+}
+.tile:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in oklab, var(--a) 55%, transparent);
+  box-shadow: 0 24px 60px -24px color-mix(in oklab, var(--a) 55%, transparent);
+}
+
+/* ── Motion ─────────────────────────────────────────────────── */
+
 @keyframes grow-bar {
   from {
     transform: scaleY(0);
@@ -71,8 +98,50 @@
     transform: scaleY(1);
   }
 }
-
 .bar-grow {
   transform-origin: bottom;
-  animation: grow-bar 900ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation: grow-bar 1000ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+.float {
+  animation: float 7s ease-in-out infinite;
+}
+
+/* Sections fade up as they scroll into view (see Reveal.jsx) */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 800ms ease,
+    transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -29,7 +29,7 @@ export const profile = {
 
   // ← REPLACE these four. Delete any line you don't want shown.
   email: 'jamespjose40@gmail.com',
-  github: 'https://github.com/your-username',
+  github: 'https://github.com/JamesDataworks',
   linkedin: 'https://www.linkedin.com/in/james-p-j-825273157/',
 
   // The "Download CV" button is hidden while this is empty, so the
@@ -87,7 +87,7 @@ export const sections = [
     id: 'power-bi',
     tab: 'Power BI',
     title: 'Power BI',
-    accent: '#d08700',
+    accent: '#f2b134',
     blurb:
       'Dashboards built around one decision each, with a documented model behind them rather than a pile of visuals.',
     projects: [
@@ -153,7 +153,7 @@ export const sections = [
     id: 'fabric',
     tab: 'Microsoft Fabric',
     title: 'Microsoft Fabric',
-    accent: '#18797b',
+    accent: '#2ec4b6',
     blurb:
       'End-to-end work in Fabric: ingestion, a medallion lakehouse, and a semantic model the reports sit directly on top of.',
     projects: [
@@ -199,7 +199,7 @@ export const sections = [
     id: 'python',
     tab: 'Python',
     title: 'Python',
-    accent: '#2d6cdf',
+    accent: '#5b8cff',
     blurb:
       'Analysis and automation — the work that happens before a dashboard exists, or instead of one.',
     projects: [
@@ -260,7 +260,7 @@ export const sections = [
     id: 'full-stack',
     tab: 'Full Stack',
     title: 'Full Stack',
-    accent: '#7340b8',
+    accent: '#a77bff',
     blurb:
       'Applications, not reports — where the user needs to put data in as well as read it out.',
     projects: [

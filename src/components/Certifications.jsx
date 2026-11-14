@@ -1,79 +1,91 @@
 import { certifications } from '../data/portfolio'
+import SectionHeader from './SectionHeader'
+import Reveal from './Reveal'
+import { Award, ArrowUpRight } from './Icons'
 
-/* Certificates are records, so they're laid out as a ledger
-   rather than as cards — easier to scan, easier to verify. */
+const ACCENT = '#f472b6'
+
+/* Badge colour by issuer, so Microsoft / Google certs are easy to spot. */
+function issuerColor(issuer = '') {
+  const i = issuer.toLowerCase()
+  if (i.includes('microsoft')) return '#5b8cff'
+  if (i.includes('google')) return '#f2b134'
+  if (i.includes('aws') || i.includes('amazon')) return '#ff9f43'
+  return '#a77bff'
+}
+
 export default function Certifications() {
   if (!certifications?.length) return null
 
   return (
-    <section id="certifications" className="border-b border-rule py-16 sm:py-20">
-      <div className="mx-auto max-w-[1180px] px-6">
-        <div className="flex flex-wrap items-end justify-between gap-6 border-b border-rule pb-7">
-          <div className="flex gap-5">
-            <span aria-hidden="true" className="mt-1 w-[5px] shrink-0 self-stretch bg-ink" />
-            <div>
-              <h2 className="font-display text-[clamp(1.85rem,4vw,2.5rem)] font-bold leading-tight text-ink">
-                Certifications
-              </h2>
-              <p className="mt-3 max-w-[56ch] text-[0.98rem] leading-relaxed text-muted">
-                Every credential below links to its issuer for verification.
-              </p>
-            </div>
-          </div>
-          <p className="text-[0.85rem] text-muted">{certifications.length} earned</p>
-        </div>
+    <section id="certifications" className="relative py-20 sm:py-24">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-0 top-10 -z-10 h-72 w-72 rounded-full opacity-20 blur-3xl"
+        style={{ backgroundColor: ACCENT }}
+      />
 
-        <div className="mt-8 overflow-x-auto border border-rule bg-surface">
-          <table className="w-full min-w-[640px] border-collapse text-left">
-            <thead>
-              <tr className="border-b-2 border-ink">
-                <th scope="col" className="px-6 py-4 font-display text-[0.85rem] font-semibold">
-                  Credential
-                </th>
-                <th scope="col" className="px-6 py-4 font-display text-[0.85rem] font-semibold">
-                  Issuer
-                </th>
-                <th scope="col" className="px-6 py-4 font-display text-[0.85rem] font-semibold">
-                  Issued
-                </th>
-                <th scope="col" className="px-6 py-4 font-display text-[0.85rem] font-semibold">
-                  Verify
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {certifications.map((c) => (
-                <tr key={c.name + c.issued} className="border-b border-rule last:border-b-0">
-                  <td className="px-6 py-5 align-top">
-                    <span className="block max-w-[38ch] font-medium leading-snug text-ink">
-                      {c.name}
+      <div className="mx-auto max-w-[1180px] px-6">
+        <SectionHeader
+          eyebrow="Credentials"
+          title="Certifications"
+          blurb="Every credential below links to its issuer for verification."
+          accent={ACCENT}
+          count={`${certifications.length} earned`}
+        />
+
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {certifications.map((c, i) => {
+            const color = issuerColor(c.issuer)
+            return (
+              <Reveal key={c.name + c.issued} delay={(i % 3) * 90}>
+                <article
+                  className="tile flex h-full flex-col rounded-2xl border border-white/10 bg-surface/70 p-6 backdrop-blur"
+                  style={{ '--a': color }}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <span
+                      className="grid h-11 w-11 shrink-0 place-items-center rounded-xl"
+                      style={{ backgroundColor: `${color}1f`, color }}
+                    >
+                      <Award width={22} height={22} />
                     </span>
                     {c.code && (
-                      <span className="mt-1 block text-[0.82rem] text-muted">Exam {c.code}</span>
+                      <span
+                        className="rounded-full px-2.5 py-1 font-display text-[0.75rem] font-semibold"
+                        style={{ backgroundColor: `${color}1a`, color }}
+                      >
+                        {c.code}
+                      </span>
                     )}
-                  </td>
-                  <td className="px-6 py-5 align-top text-[0.92rem] text-muted">{c.issuer}</td>
-                  <td className="px-6 py-5 align-top whitespace-nowrap text-[0.92rem] text-muted">
-                    {c.issued}
-                  </td>
-                  <td className="px-6 py-5 align-top">
+                  </div>
+
+                  <h3 className="mt-5 font-display text-[1.02rem] font-semibold leading-snug text-ink">
+                    {c.name}
+                  </h3>
+                  <p className="mt-2 text-[0.85rem] text-muted">
+                    {c.issuer} · {c.issued}
+                  </p>
+
+                  <div className="mt-auto pt-5">
                     {c.url ? (
                       <a
                         href={c.url}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-[0.9rem] font-medium text-ink underline decoration-rule decoration-2 underline-offset-4 transition-colors hover:decoration-ink"
+                        className="inline-flex items-center gap-1.5 text-[0.85rem] font-medium transition-opacity hover:opacity-80"
+                        style={{ color }}
                       >
-                        Verify
+                        Verify credential <ArrowUpRight width={14} height={14} />
                       </a>
                     ) : (
-                      <span className="text-[0.9rem] text-muted">On request</span>
+                      <span className="text-[0.85rem] text-muted">Available on request</span>
                     )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  </div>
+                </article>
+              </Reveal>
+            )
+          })}
         </div>
       </div>
     </section>

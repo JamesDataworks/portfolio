@@ -23,8 +23,8 @@ export default function App() {
       <Skills />
 
       <main>
-        {sections.map((section) => (
-          <Section key={section.id} section={section} />
+        {sections.map((section, i) => (
+          <Section key={section.id} section={section} index={i} />
         ))}
         <Certifications />
       </main>

@@ -1,49 +1,64 @@
 import { profile } from '../data/portfolio'
+import Reveal from './Reveal'
+import { Mail, GitHub, LinkedIn, Download } from './Icons'
 
 export default function Footer() {
   const year = new Date().getFullYear()
 
   const links = [
-    profile.email && { label: profile.email, href: `mailto:${profile.email}` },
-    profile.github && { label: 'GitHub', href: profile.github },
-    profile.linkedin && { label: 'LinkedIn', href: profile.linkedin },
-    profile.resume && { label: 'CV', href: profile.resume },
+    profile.email && { label: 'Email', href: `mailto:${profile.email}`, icon: Mail },
+    profile.github && { label: 'GitHub', href: profile.github, icon: GitHub },
+    profile.linkedin && { label: 'LinkedIn', href: profile.linkedin, icon: LinkedIn },
+    profile.resume && { label: 'CV', href: profile.resume, icon: Download },
   ].filter(Boolean)
 
   return (
-    <footer className="py-16 sm:py-20">
+    <footer className="pb-10 pt-8">
       <div className="mx-auto max-w-[1180px] px-6">
-        <h2 className="max-w-[20ch] font-display text-[clamp(1.85rem,4vw,2.75rem)] font-bold leading-[1.05] text-ink">
-          Have a reporting problem worth solving?
-        </h2>
+        <Reveal className="relative overflow-hidden rounded-3xl border border-white/10 bg-surface/70 px-6 py-14 text-center sm:px-12 sm:py-20">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(600px_300px_at_20%_0%,rgb(91_140_255/0.25),transparent_70%),radial-gradient(600px_300px_at_80%_100%,rgb(167_123_255/0.25),transparent_70%)]"
+          />
+          <div aria-hidden="true" className="grid-bg pointer-events-none absolute inset-0 opacity-60" />
 
-        <p className="mt-5 max-w-[46ch] text-[1rem] leading-relaxed text-muted">
-          Tell me what decision the data needs to support and I'll tell you whether it needs a
-          dashboard, a pipeline, or neither.
-        </p>
+          <div className="relative">
+            <h2 className="mx-auto max-w-[20ch] font-display text-[clamp(2rem,4.5vw,3.25rem)] font-bold leading-[1.05] text-ink">
+              Have a reporting problem <span className="text-gradient">worth solving?</span>
+            </h2>
 
-        {profile.email && (
-          <a
-            href={`mailto:${profile.email}`}
-            className="mt-8 inline-flex items-center bg-ink px-5 py-3 font-medium text-canvas transition-opacity duration-150 hover:opacity-85"
-          >
-            Start a conversation
-          </a>
-        )}
+            <p className="mx-auto mt-5 max-w-[48ch] text-[1rem] leading-relaxed text-muted">
+              Tell me what decision the data needs to support and I'll tell you whether it needs a
+              dashboard, a pipeline, or neither.
+            </p>
 
-        <div className="mt-16 flex flex-wrap items-center justify-between gap-x-8 gap-y-4 border-t border-rule pt-6 text-[0.85rem] text-muted">
+            {profile.email && (
+              <a
+                href={`mailto:${profile.email}`}
+                className="mt-9 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#5b8cff] to-[#a77bff] px-7 py-3.5 font-medium text-white shadow-lg shadow-[#5b8cff]/30 transition duration-200 hover:-translate-y-0.5 hover:shadow-[#a77bff]/40"
+              >
+                <Mail width={17} height={17} />
+                Start a conversation
+              </a>
+            )}
+          </div>
+        </Reveal>
+
+        <div className="mt-10 flex flex-wrap items-center justify-between gap-x-8 gap-y-4 text-[0.85rem] text-muted">
           <p>
             © {year} {profile.name}
           </p>
-          <ul className="flex flex-wrap gap-x-6 gap-y-2">
-            {links.map((l) => (
-              <li key={l.label}>
+          <ul className="flex flex-wrap gap-2">
+            {links.map(({ label, href, icon: Icon }) => (
+              <li key={label}>
                 <a
-                  href={l.href}
-                  className="underline decoration-rule decoration-2 underline-offset-4 transition-colors hover:text-ink hover:decoration-ink"
-                  {...(l.href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}
+                  href={href}
+                  aria-label={label}
+                  title={label}
+                  className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-muted transition-colors hover:border-white/25 hover:text-ink"
+                  {...(href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}
                 >
-                  {l.label}
+                  <Icon width={17} height={17} />
                 </a>
               </li>
             ))}
