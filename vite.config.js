@@ -12,7 +12,7 @@ import tailwindcss from '@tailwindcss/vite'
    Getting this wrong is the #1 cause of a blank white page
    after deploying. Nothing else in the project needs editing.
    ═══════════════════════════════════════════════════════════════ */
-const BASE = '/'
+const BASE = '/portfolio/'
 
 export default defineConfig({
   base: BASE,
