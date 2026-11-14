@@ -321,30 +321,5 @@ export const certifications = [
     issuer: 'Microsoft',
     issued: 'Mar 2026',
     url: 'https://learn.microsoft.com/en-us/users/your-profile/credentials/your-credential-id',
-  },
-  {
-    name: 'Microsoft Certified: Power BI Data Analyst Associate',
-    code: 'PL-300',
-    issuer: 'Microsoft',
-    issued: 'Nov 2025',
-    url: 'https://learn.microsoft.com/en-us/users/your-profile/credentials/your-credential-id',
-  },
-  {
-    name: 'Microsoft Certified: Azure Data Fundamentals',
-    code: 'DP-900',
-    issuer: 'Microsoft',
-    issued: 'Jul 2025',
-    url: 'https://learn.microsoft.com/en-us/users/your-profile/credentials/your-credential-id',
-  },
-  {
-    name: 'Google Data Analytics Professional Certificate',
-    issuer: 'Google · Coursera',
-    issued: 'Feb 2025',
-    url: 'https://coursera.org/verify/professional-cert/your-credential-id',
-  },
-  {
-    name: 'Full Stack Web Development (MERN)',
-    issuer: 'Your training provider',
-    issued: 'Sep 2024',
-  },
+  }
 ]
